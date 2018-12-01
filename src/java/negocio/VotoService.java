@@ -20,6 +20,7 @@ public class VotoService{
         consulta.setParameter("cargo", v.getVotoPK().getIdcargo());
         consulta.setParameter("numero", v.getVotoPK().getNumcandidato());
         Voto vt = null;
+        System.out.println("");
         try{
             vt = (Voto) consulta.getSingleResult();
         }catch(NoResultException e){
