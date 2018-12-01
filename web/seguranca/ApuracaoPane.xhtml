@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+            <p:panel id="basic" header="Apuração" style="margin-bottom:20px" rendered="#{homeBean.apuracaoPane}" >
+                <h:form id="apuracao" rendered="#{homeBean.apuracaoPane}">
+                    <p:commandButton action="#{apuracaoBean.atualizar()}" value="Atualizar" id="Confirmar" style="margin-right:20px;" icon="pi pi-save" update=":mainPanel:basic"/>
+                <h:outputText value="Presidente" style="font-weight: bolder"/>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:dataTable var="cand" value="#{apuracaoBean.listaPresidentes}">
+                        <p:column headerText="Candidato">
+                            <h:outputText value="#{cand.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Vice">
+                            <h:outputText value="#{cand.vice}" />
+                        </p:column>
+
+                        <p:column headerText="Partido">
+                            <h:outputText value="#{cand.partido}" />
+                        </p:column>
+
+                        <p:column headerText="Votos">
+                            <h:outputText value="#{cand.votos}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+                <h:outputText value="Governador" style="font-weight: bolder"/>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:dataTable  var="cand" value="#{apuracaoBean.listaGovernadores}">
+                        <p:column headerText="Candidato">
+                            <h:outputText value="#{cand.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Vice">
+                            <h:outputText value="#{cand.vice}" />
+                        </p:column>
+
+                        <p:column headerText="Partido">
+                            <h:outputText value="#{cand.partido}" />
+                        </p:column>
+
+                        <p:column headerText="Votos">
+                            <h:outputText value="#{cand.votos}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+                <h:outputText value="Prefeito" style="font-weight: bolder"/>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:dataTable var="cand" value="#{apuracaoBean.listaPrefeitos}">
+                        <p:column headerText="Candidato">
+                            <h:outputText value="#{cand.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Vice">
+                            <h:outputText value="#{cand.vice}" />
+                        </p:column>
+
+                        <p:column headerText="Partido">
+                            <h:outputText value="#{cand.partido}" />
+                        </p:column>
+
+                        <p:column headerText="Votos">
+                            <h:outputText value="#{cand.votos}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+                </h:form>
+            </p:panel>
+            <style type="text/css">
+                .ui-steps .ui-steps-item {
+                    width: 24%;
+                }
+
+                .ui-state-highlight {
+                    text-shadow: none !important;
+                }
+
+                .ui-steps.custom {
+                    margin-bottom: 30px;
+                }
+
+                .ui-steps.custom .ui-steps-item .ui-menuitem-link {
+                    height: 10px;
+                    padding: 0 1em;
+                }
+
+                .ui-steps.custom .ui-steps-item .ui-steps-number {
+                    background-color: green;
+                    color: #FFFFFF;
+                    display: inline-block;
+                    width: 30px;
+                    border-radius: 10px;
+                    margin-top: -10px;
+                    margin-bottom: 10px;
+                }
+
+                .ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+                    color: #555;
+                }
+            </style>
+        
+    </h:body>
+</html>
+

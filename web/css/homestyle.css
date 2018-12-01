@@ -1,0 +1,13 @@
+#mainTitle{
+    font-family : Bahnschrift;
+    font-size : 50px;   
+    color : green;
+    line-height: 2;
+    font-weight: bold;
+}
+
+#subTitle{
+    font-family : Bahnschrift;
+    font-size : 60px;   
+    color : yellow;
+}

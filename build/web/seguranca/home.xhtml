@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Eleições2018</title>
+            </f:facet>
+            <style type="text/css">
+                #footer{
+                    background-color: green;
+                }
+                #mainTitle{
+                    font-family : Bahnschrift;
+                    font-size : 50px;   
+                    color : green;
+                    line-height: 2;
+                    font-weight: bold;
+                }
+
+                #subTitle{
+                    font-family : Bahnschrift;
+                    font-size : 60px;   
+                    color : yellow;
+                }
+                .ui-steps .ui-steps-item {
+                    width: 24%;
+                }
+
+                .ui-state-highlight {
+                    text-shadow: none !important;
+                }
+
+                .ui-steps.custom {
+                    margin-bottom: 30px;
+                }
+
+                .ui-steps.custom .ui-steps-item .ui-menuitem-link {
+                    height: 10px;
+                    padding: 0 1em;
+                }
+
+                .ui-steps.custom .ui-steps-item .ui-steps-number {
+                    background-color: green;
+                    color: #FFFFFF;
+                    display: inline-block;
+                    width: 30px;
+                    border-radius: 10px;
+                    margin-top: -10px;
+                    margin-bottom: 10px;
+                }
+
+                .ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+                    color: #555;
+                }
+            </style>
+        </h:head>
+        <h:body>
+            <p:layout  fullPage="true">
+                <p:layoutUnit position="center">
+                    <h:form id="mainPanel">
+                        <ui:include id="vtPane" src="VotePane.xhtml"/>
+                        <ui:include id="apPane" src="ApuracaoPane.xhtml"/>
+                        <ui:include id="cdPane" src="CandidatosPane.xhtml"/>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit position="north" size="120" resizable="false" closable="false" collapsible="false">
+                    <h id="mainTitle">Eleições</h>
+                    <h id="subTitle">2018</h>
+                </p:layoutUnit>
+                <p:layoutUnit id="footer" position="west" size="248" collapsible="false">
+                    <h:form id="menu">
+                        <p:menu>
+                            <p:submenu label="Menu">
+                                <p:menuitem value="Candidatos" action="#{homeBean.turnOnCandidatosPane()}" update="mainPanel" />
+                                <p:menuitem value="Votar" action="#{homeBean.turnOnVotarPane()}" update="mainPanel"/>
+                                <p:menuitem value="Apuração" action="#{homeBean.turnOnApuracaoPane()}" update="mainPanel"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+                
+            </p:layout>
+        </h:body>
+
+    </f:view>
+</html>
+
