@@ -23,7 +23,6 @@ public class LoginBean implements Serializable {
 
     private Boolean estaLogado = false;
 
-    public static Eleitor eleitor = new Eleitor();
 
     private String feedbackColor = "red";
     private String feedbackLogin = "";
@@ -36,11 +35,11 @@ public class LoginBean implements Serializable {
         try {
             if (titEleitor != null && senha != null) {
                 estaLogado = true;
-                eleitor.setCpf(es.buscarEleitor(titEleitor, senha).getCpf());
-                eleitor.setNome(es.buscarEleitor(titEleitor, senha).getNome());
-                eleitor.setSenha(es.buscarEleitor(titEleitor, senha).getSenha());
-                eleitor.setTituloeleitor(es.buscarEleitor(titEleitor, senha).getTituloeleitor());
-                eleitor.setStep(es.buscarEleitor(titEleitor, senha).getStep());
+                HomeBean.getEleitor().setCpf(es.buscarEleitor(titEleitor, senha).getCpf());
+                HomeBean.getEleitor().setNome(es.buscarEleitor(titEleitor, senha).getNome());
+                HomeBean.getEleitor().setSenha(es.buscarEleitor(titEleitor, senha).getSenha());
+                HomeBean.getEleitor().setTituloeleitor(es.buscarEleitor(titEleitor, senha).getTituloeleitor());
+                HomeBean.getEleitor().setStep(es.buscarEleitor(titEleitor, senha).getStep());
                 Logger.getLogger(getClass().getName()).info("Usuario logado com sucesso!");
                 return "/seguranca/home.xhtml?faces-redirect=true";
 

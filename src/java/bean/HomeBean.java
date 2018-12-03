@@ -3,10 +3,13 @@ package bean;
 import java.io.Serializable;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import model.Eleitor;
 
 @ManagedBean
 @SessionScoped
 public class HomeBean implements Serializable {
+    
+    private static Eleitor eleitor = new Eleitor();
 
     private boolean candidatosPane = true;
     private boolean votarPane = false;
@@ -26,7 +29,7 @@ public class HomeBean implements Serializable {
     }
 
     public void turnOnVotarPane() {
-        if(VotarBean.eleitor.getStep() < 3){
+        if(eleitor.getStep() < 3){
             candidatosPane = false;
             votarPane = true;
             apuracaoPane = false;
@@ -42,7 +45,7 @@ public class HomeBean implements Serializable {
     }
 
     public void turnOnApuracaoPane() {
-        if (VotarBean.eleitor.getStep() < 3) {
+        if (eleitor.getStep() < 3) {
             candidatosPane = false;
             votarPane = false;
             apuracaoPane = false;
@@ -95,6 +98,14 @@ public class HomeBean implements Serializable {
 
     public void setBlockVotar(boolean blockVotar) {
         this.blockVotar = blockVotar;
+    }
+
+    public static Eleitor getEleitor() {
+        return eleitor;
+    }
+
+    public static void setEleitor(Eleitor eleitor) {
+        HomeBean.eleitor = eleitor;
     }
 
 }

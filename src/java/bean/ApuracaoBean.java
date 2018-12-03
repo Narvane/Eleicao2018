@@ -3,6 +3,7 @@ package bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import model.Candidato;
@@ -21,6 +22,12 @@ public class ApuracaoBean implements Serializable {
     private List<Candidato> listaPrefeitos = new ArrayList<>();
 
     public ApuracaoBean() {
+        loadListaPresidentes();
+        loadListaGovernadores();
+        loadListaPrefeitos();
+    }
+    @PostConstruct
+    public void init() {     
         loadListaPresidentes();
         loadListaGovernadores();
         loadListaPrefeitos();

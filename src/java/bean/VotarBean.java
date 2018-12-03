@@ -26,7 +26,7 @@ public class VotarBean implements Serializable {
     VotoService vs = new VotoService();
     EleitorVotosService evs = new EleitorVotosService();
 
-    public static Eleitor eleitor = LoginBean.eleitor;
+    Eleitor eleitor = HomeBean.getEleitor();
     private boolean urnaPane = true;
 
     private boolean btnConfirmar = true;
@@ -47,7 +47,7 @@ public class VotarBean implements Serializable {
         candidato.setImagem("Branco.png");
     }
     public void updateEleitor(){
-        eleitor = es.buscarEleitor(LoginBean.eleitor.getTituloeleitor(), LoginBean.eleitor.getSenha());
+        HomeBean.setEleitor(es.buscarEleitor(HomeBean.getEleitor().getTituloeleitor(), HomeBean.getEleitor().getSenha())); 
     }
     
     public void nextStep() {
@@ -57,6 +57,7 @@ public class VotarBean implements Serializable {
         } else {
             turnOffUrna();
             msgFinalizado = true;
+            step++;
         }
     }
 
