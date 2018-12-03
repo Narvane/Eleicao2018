@@ -13,6 +13,8 @@ import negocio.CandidatoService;
 public class ApuracaoBean implements Serializable {
     
     private CandidatoService cs = new CandidatoService();
+    
+    public static Boolean ativarApuracao;
 
     private List<Candidato> listaPresidentes = new ArrayList<>();
     private List<Candidato> listaGovernadores = new ArrayList<>();
@@ -63,6 +65,14 @@ public class ApuracaoBean implements Serializable {
 
     public void setListaPrefeitos(List<Candidato> listaPrefeitos) {
         this.listaPrefeitos = listaPrefeitos;
+    }
+
+    public Boolean getAtivarApuracao() {
+        return ativarApuracao;
+    }
+
+    public void setAtivarApuracao(Boolean ativarApuracao) {
+        this.ativarApuracao = ativarApuracao;
     }
 
     

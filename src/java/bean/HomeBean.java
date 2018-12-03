@@ -11,33 +11,52 @@ public class HomeBean implements Serializable {
     private boolean candidatosPane = true;
     private boolean votarPane = false;
     private boolean apuracaoPane = false;
-
-    private int step;
+    private boolean blockApuracao = false;
+    private boolean blockVotar = false;
 
     public HomeBean() {
-    }
-
-    public void nextStep() {
-        step++;
     }
 
     public void turnOnCandidatosPane() {
         candidatosPane = true;
         votarPane = false;
         apuracaoPane = false;
+        blockApuracao = false;
+        blockVotar = false;
     }
 
     public void turnOnVotarPane() {
-        candidatosPane = false;
-        votarPane = true;
-        apuracaoPane = false;
+        if(VotarBean.eleitor.getStep() < 3){
+            candidatosPane = false;
+            votarPane = true;
+            apuracaoPane = false;
+            blockApuracao = false;
+            blockVotar = false;
+        }else{
+            candidatosPane = false;
+            votarPane = false;
+            apuracaoPane = false;
+            blockApuracao = false;
+            blockVotar = true;
+        }
     }
 
     public void turnOnApuracaoPane() {
-        candidatosPane = false;
-        votarPane = false;
-        apuracaoPane = true;
+        if (VotarBean.eleitor.getStep() < 3) {
+            candidatosPane = false;
+            votarPane = false;
+            apuracaoPane = false;
+            blockApuracao = true;
+            blockVotar = false;
+        } else {
+            candidatosPane = false;
+            votarPane = false;
+            apuracaoPane = true;
+            blockApuracao = false;
+            blockVotar = false;
+        }
     }
+
     public boolean isVotarPane() {
         return votarPane;
     }
@@ -62,11 +81,20 @@ public class HomeBean implements Serializable {
         this.candidatosPane = candidatosPane;
     }
 
-    public int getStep() {
-        return step;
+    public boolean isBlockApuracao() {
+        return blockApuracao;
     }
 
-    public void setStep(int step) {
-        this.step = step;
+    public void setBlockApuracao(boolean blockApuracao) {
+        this.blockApuracao = blockApuracao;
     }
+
+    public boolean isBlockVotar() {
+        return blockVotar;
+    }
+
+    public void setBlockVotar(boolean blockVotar) {
+        this.blockVotar = blockVotar;
+    }
+
 }

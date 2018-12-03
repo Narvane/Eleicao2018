@@ -1,9 +1,6 @@
 package bean;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import model.Candidato;
@@ -29,11 +26,7 @@ public class VotarBean implements Serializable {
     VotoService vs = new VotoService();
     EleitorVotosService evs = new EleitorVotosService();
 
-    private Eleitor eleitor = LoginBean.eleitor;
-
-    private int step = 0;
-    private Integer numVoto;
-    private boolean finalizadoPane = false;
+    public static Eleitor eleitor = LoginBean.eleitor;
     private boolean urnaPane = true;
 
     private boolean btnConfirmar = true;
@@ -41,12 +34,20 @@ public class VotarBean implements Serializable {
     private boolean btnBranco = true;
     private boolean btnCorrigir = true;
     private boolean textFieldVoto = true;
+    private boolean msgFinalizado = false;
+
+    public static int step = 0;
+    private Integer numVoto;
 
     private Candidato candidato = new Candidato();
 
     public VotarBean() {
+        updateEleitor();
         step = eleitor.getStep();
         candidato.setImagem("Branco.png");
+    }
+    public void updateEleitor(){
+        eleitor = es.buscarEleitor(LoginBean.eleitor.getTituloeleitor(), LoginBean.eleitor.getSenha());
     }
     
     public void nextStep() {
@@ -54,8 +55,8 @@ public class VotarBean implements Serializable {
             step++;
             System.out.println(step);
         } else {
-            turnOnFinalizadoPane();
-            step++;
+            turnOffUrna();
+            msgFinalizado = true;
         }
     }
 
@@ -79,7 +80,7 @@ public class VotarBean implements Serializable {
             Candidato c = new Candidato();
             c.setNumcandidato(v.getVotoPK().getNumcandidato());
 
-            cs.buscarCandidatoPorNum(numVoto);
+            //cs.buscarCandidatoPorNum(numVoto);
 
             candidato.setNome(cs.buscarCandidatoPorNum(numVoto).getNome());
             candidato.setVice(cs.buscarCandidatoPorNum(numVoto).getVice());
@@ -133,6 +134,7 @@ public class VotarBean implements Serializable {
             es.updateEleitor(eleitor);
             corrigir();
             nextStep();
+            updateEleitor();
 
         }else{
             System.out.println("Voto Invalido!");
@@ -180,6 +182,7 @@ public class VotarBean implements Serializable {
             es.updateEleitor(eleitor);
             corrigir();
             nextStep();
+            updateEleitor();
 
     }
 
@@ -196,9 +199,7 @@ public class VotarBean implements Serializable {
         }
         return 0;
     }
-
-    public void turnOnFinalizadoPane() {
-        finalizadoPane = true;
+public void turnOffUrna() {
         urnaPane = false;
         btnConfirmar = false;
         btnVerificar = false;
@@ -247,12 +248,12 @@ public class VotarBean implements Serializable {
         this.eleitor = eleitor;
     }
 
-    public boolean isFinalizadoPane() {
-        return finalizadoPane;
+    public String getImage() {
+        return image;
     }
 
-    public void setFinalizadoPane(boolean finalizadoPane) {
-        this.finalizadoPane = finalizadoPane;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean isUrnaPane() {
@@ -303,12 +304,12 @@ public class VotarBean implements Serializable {
         this.textFieldVoto = textFieldVoto;
     }
 
-    public String getImage() {
-        return image;
+    public boolean isMsgFinalizado() {
+        return msgFinalizado;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setMsgFinalizado(boolean msgFinalizado) {
+        this.msgFinalizado = msgFinalizado;
     }
 
    

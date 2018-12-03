@@ -11,8 +11,8 @@ import negocio.EleitorService;
 
 @ManagedBean
 @SessionScoped
-public class LoginBean implements Serializable{
-    
+public class LoginBean implements Serializable {
+
     EleitorService es = new EleitorService();
 
     private Integer titEleitor;
@@ -20,49 +20,59 @@ public class LoginBean implements Serializable{
     private String cfSenha;
     private String cpf;
     private String nome;
-    
+
     private Boolean estaLogado = false;
-    
+
     public static Eleitor eleitor = new Eleitor();
+
+    private String feedbackColor = "red";
+    private String feedbackLogin = "";
+    private String feedbackCadastro = "";
 
     public LoginBean() {
     }
-    
-    
+
     public String logar() {
-        int buscaTitulo = es.buscarEleitor(titEleitor, senha).getTituloeleitor();
-        String buscaSenha = es.buscarEleitor(titEleitor, senha).getSenha();
+        try {
+            if (titEleitor != null && senha != null) {
+                estaLogado = true;
+                eleitor.setCpf(es.buscarEleitor(titEleitor, senha).getCpf());
+                eleitor.setNome(es.buscarEleitor(titEleitor, senha).getNome());
+                eleitor.setSenha(es.buscarEleitor(titEleitor, senha).getSenha());
+                eleitor.setTituloeleitor(es.buscarEleitor(titEleitor, senha).getTituloeleitor());
+                eleitor.setStep(es.buscarEleitor(titEleitor, senha).getStep());
+                Logger.getLogger(getClass().getName()).info("Usuario logado com sucesso!");
+                return "/seguranca/home.xhtml?faces-redirect=true";
 
-        if (titEleitor != null && senha != null && titEleitor== buscaTitulo && senha.equals(buscaSenha)) {
-            estaLogado = true;
-            eleitor.setCpf(es.buscarEleitor(titEleitor, senha).getCpf());
-            eleitor.setNome(es.buscarEleitor(titEleitor, senha).getNome());
-            eleitor.setSenha(es.buscarEleitor(titEleitor, senha).getSenha());
-            eleitor.setTituloeleitor(es.buscarEleitor(titEleitor, senha).getTituloeleitor());
-            eleitor.setStep(es.buscarEleitor(titEleitor, senha).getStep());
-            Logger.getLogger(getClass().getName()).info("Usuario logado com sucesso!");
-            return "/seguranca/home.xhtml?faces-redirect=true";
-
-        } else {
-            estaLogado = false;
-            this.senha = "";
-            Logger.getLogger(getClass().getName()).info("Falha no login!");
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro no Login", "Usuario e/ou senha invalidos.");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            } else {
+                estaLogado = false;
+                this.senha = "";
+                Logger.getLogger(getClass().getName()).info("Falha no login!");
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro no Login", "Usuario e/ou senha invalidos.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return "/index";
+            }
+        } catch (Exception e) {
+            feedbackLogin = "Usuário/senha incorreta!";
             return "/index";
         }
     }
-    public void cadastrar(){
-        if((senha == null ? cfSenha == null : senha.equals(cfSenha)) && titEleitor != null && nome != null && cpf != null && cfSenha != null && senha != null){
-            Eleitor e = new Eleitor();
-            e.setNome(nome);
-            e.setSenha(senha);
-            e.setTituloeleitor(titEleitor);
-            e.setCpf(cpf);
-            e.setStep(0);
-            es.cadastrarEleitor(e);
+
+    public void cadastrar() {
+        Eleitor e = new Eleitor();
+        e.setNome(nome);
+        e.setSenha(senha);
+        e.setTituloeleitor(titEleitor);
+        e.setCpf(cpf);
+        e.setStep(0);
+        if (es.cadastrarEleitor(e)) {
+            feedbackCadastro = "Cadastrado com sucesso!";
+            feedbackColor = "green";
+        } else {
+            System.out.println("PIOIOIJFOUASHIFJAS");
+            feedbackCadastro = "Algo de errado não está certo!";
         }
-        
+
     }
 
     public Integer getTitEleitor() {
@@ -112,5 +122,29 @@ public class LoginBean implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
+    public String getFeedbackLogin() {
+        return feedbackLogin;
+    }
+
+    public void setFeedbackLogin(String feedbackLogin) {
+        this.feedbackLogin = feedbackLogin;
+    }
+
+    public String getFeedbackCadastro() {
+        return feedbackCadastro;
+    }
+
+    public void setFeedbackCadastro(String feedbackCadastro) {
+        this.feedbackCadastro = feedbackCadastro;
+    }
+
+    public String getFeedbackColor() {
+        return feedbackColor;
+    }
+
+    public void setFeedbackColor(String feedbackColor) {
+        this.feedbackColor = feedbackColor;
+    }
+
 }

@@ -34,10 +34,16 @@ public class EleitorService{
         em.persist(reg);
         em.getTransaction().commit();
     }
-    public void cadastrarEleitor(Eleitor e){
-        em.getTransaction().begin();
-        em.persist(e);
-        em.getTransaction().commit();
+    public boolean cadastrarEleitor(Eleitor e){
+        try{
+            em.getTransaction().begin();
+            em.persist(e);
+            em.getTransaction().commit();
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
     public void updateEleitor(Eleitor e){
         e = buscarEleitor(e.getTituloeleitor(), e.getSenha());
